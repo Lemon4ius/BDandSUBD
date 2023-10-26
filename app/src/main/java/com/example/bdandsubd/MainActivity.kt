@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(),MainNavigation {
         setContentView(binding.root)
         CoroutineScope(Dispatchers.IO).launch {
             DbWorker.build(applicationContext)
+ 
         }
         val navigatorHolder = App.INSTANCE.navigatorHolder
         val navigator = AppNavigator(this, R.id.frameLayout, supportFragmentManager)

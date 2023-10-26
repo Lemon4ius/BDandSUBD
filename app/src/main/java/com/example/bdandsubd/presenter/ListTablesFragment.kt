@@ -1,4 +1,4 @@
-package com.example.bdandsubd
+package com.example.bdandsubd.presenter
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bdandsubd.MainActivity
+import com.example.bdandsubd.MainNavigation
+import com.example.bdandsubd.MyClickListener
 import com.example.bdandsubd.databinding.FragmentListTablesBinding
 import com.example.bdandsubd.recycle.RecycleAdapter
 
@@ -28,7 +31,7 @@ class ListTablesFragment : Fragment() {
         binding= FragmentListTablesBinding.inflate(inflater)
         var tables = listOf("Отели", "Комнаты", "Гости")
         val layoutMager=LinearLayoutManager(requireContext())
-        val adapter= RecycleAdapter(tables,object: MyClickListener{
+        val adapter= RecycleAdapter(tables,object: MyClickListener {
             override fun getGuestClick() {
                 mainNavigation.goToGuest()
             }
