@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/search_bar"
         android:icon="@drawable/search"
@@ -13,4 +14,10 @@
         android:icon="@drawable/filter"
         app:showAsAction="ifRoom"
         android:title="TODO" />
+    <item
+        android:id="@+id/trash"
+        android:icon="@drawable/baseline_restore_from_trash_24"
+        app:showAsAction="ifRoom"
+        android:title="TODO"
+        />
 </menu>

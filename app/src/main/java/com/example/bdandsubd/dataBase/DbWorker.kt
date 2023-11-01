@@ -1,10 +1,8 @@
-package com.example.bdandsubd
+package com.example.bdandsubd.dataBase
 
 import android.content.Context
 import androidx.room.Room
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.bdandsubd.navigation.DaoData
 
 object DbWorker {
     lateinit var applicationContext: Context

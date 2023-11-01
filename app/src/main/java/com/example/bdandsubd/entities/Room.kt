@@ -4,10 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Room",
+    indices = [Index(
+        value = ["roomNumber"],
+        unique = true
+    )],
     foreignKeys = [
         ForeignKey(
             entity = Guest::class,
@@ -24,7 +29,8 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Room(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int?,
     @ColumnInfo(name = "hotel_id") val idHotel:Int,
     @ColumnInfo(name = "guest_id") val idGuest: Int,
     val roomNumber:Int,

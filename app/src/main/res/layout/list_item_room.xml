@@ -9,21 +9,22 @@
         android:id="@+id/nuberRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="№ 23"
         android:textSize="25sp"
-        android:layout_margin="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/price"
+        app:layout_constraintStart_toEndOf="@+id/nameHotel"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nameHotel"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Best Hotel"
         android:layout_margin="16dp"
+        android:text="Best Hotel"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nuberRoom" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/price"
@@ -31,8 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="203 BYN"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="15sp"
+
+        app:layout_constraintEnd_toStartOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,10 +43,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Тип: Laxary"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price"
-        tools:layout_editor_absoluteX="315dp" />
+        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/guestInRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Проживает: Ахмед Амир Яхья"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@+id/nameHotel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

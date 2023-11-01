@@ -1,4 +1,4 @@
-package com.example.bdandsubd
+package com.example.bdandsubd.recycle.listeners
 
 interface MyClickListener {
     fun getGuestClick()

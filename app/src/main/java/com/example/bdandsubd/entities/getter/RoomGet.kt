@@ -1,4 +1,4 @@
-package com.example.bdandsubd.entities
+package com.example.bdandsubd.entities.getter
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,4 +14,5 @@ data class RoomGet(
     val roomNumber: Int,
     val type: String,
     val price: Double,
+    var isChecked:Boolean?=false
 )

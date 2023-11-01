@@ -6,10 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bdandsubd.MainActivity
 import com.example.bdandsubd.MainNavigation
-import com.example.bdandsubd.MyClickListener
+import com.example.bdandsubd.recycle.listeners.MyClickListener
 import com.example.bdandsubd.databinding.FragmentListTablesBinding
 import com.example.bdandsubd.recycle.RecycleAdapter
 
@@ -46,6 +47,10 @@ class ListTablesFragment : Fragment() {
         },1)
         binding.recycleView.adapter=adapter
         binding.recycleView.layoutManager=layoutMager
+        binding.recycleView.addItemDecoration(
+            DividerItemDecoration(requireContext(),
+                DividerItemDecoration.VERTICAL)
+        )
         return binding.root
     }
 
