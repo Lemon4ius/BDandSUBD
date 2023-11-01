@@ -30,7 +30,6 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     View.OnClickListener {
     companion object {
         const val TABLE_VIEW = 1
-        const val ITEM_VIEW = 2
         const val GUEST_VIEW = 3
         const val Room_VIEW = 4
         const val HOTEL_VIEW = 5
@@ -208,11 +207,6 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             1 -> {
                 return tablesList.size
             }
-
-            2 -> {
-                return 10
-            }
-
             3 -> {
                 return guestList.size
             }
@@ -244,12 +238,9 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                 }
             }
 
-            2 -> {
-
-            }
-
             3 -> {
-
+                val guest=v?.tag as GuestGet
+                guestListener.editGuest(guest)
             }
 
             4 -> {
@@ -257,7 +248,8 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             }
 
             5 -> {
-
+                val hotel=v?.tag as HotelGet
+                hotelListener.editHotel(hotel)
             }
         }
     }

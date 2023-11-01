@@ -9,14 +9,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.bdandsubd.SharedViewModel
+import com.example.bdandsubd.presenter.viewmodels.SharedViewModel
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.databinding.FragmentAddGuestBinding
 import com.example.bdandsubd.entities.getter.GuestGet
 import com.example.bdandsubd.entities.Hotel
 import com.example.bdandsubd.entities.Room
+import com.example.bdandsubd.entities.getter.HotelGet
 import com.example.bdandsubd.presenter.spinerAdapter.GuestSpinerAdapter
 import com.example.bdandsubd.presenter.spinerAdapter.HotelSpinerAdapter
+import com.example.bdandsubd.presenter.viewmodels.SharedRoomViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,13 +26,13 @@ import kotlinx.coroutines.withContext
 
 class AddRoomFragment : Fragment() {
     lateinit var binding: FragmentAddGuestBinding
-    lateinit var viewModel:SharedViewModel
+    lateinit var viewModel: SharedRoomViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddGuestBinding.inflate(inflater)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(SharedRoomViewModel::class.java)
 
         initSpiners()
         binding.cancelButton.setOnClickListener {
@@ -46,7 +48,7 @@ class AddRoomFragment : Fragment() {
             val numberOfRoom = binding.numberOfRoom.text.toString().toInt()
             val price = binding.priceRoom.text.toString().toInt()
             viewLifecycleOwner.lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
+                val job= launch(Dispatchers.IO) {
                     DbWorker.newsDao.insertDtaIntoRoom(
                         Room(
                             null,
@@ -58,9 +60,12 @@ class AddRoomFragment : Fragment() {
                         )
                     )
                 }
+                job.join()
+                viewModel.setCallbackValue(true)
+                parentFragmentManager.beginTransaction().remove(this@AddRoomFragment).commit()
             }
-            viewModel.setCallbackValue(true)
-            parentFragmentManager.beginTransaction().remove(this).commit()
+
+
         }
 
     }
@@ -137,7 +142,7 @@ class AddRoomFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedHotel = binding.hotelList.selectedItem as Hotel
+                val selectedHotel = binding.hotelList.selectedItem as HotelGet
                 selectedhotel = selectedHotel.id!!
             }
 

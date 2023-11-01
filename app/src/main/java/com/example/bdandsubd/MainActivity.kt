@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(),MainNavigation {
         val navigatorHolder = App.INSTANCE.navigatorHolder
         val navigator = AppNavigator(this, R.id.frameLayout, supportFragmentManager)
         navigatorHolder.setNavigator(navigator)
-        router.navigateTo(Screen.TabledListFrag())
+        router.newRootScreen(Screen.TabledListFrag())
     }
 
     override fun goToHotel() {

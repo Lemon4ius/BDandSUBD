@@ -12,11 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bdandsubd.R
-import com.example.bdandsubd.SharedViewModel
+import com.example.bdandsubd.presenter.viewmodels.SharedViewModel
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.databinding.FragmentRoomListBinding
 import com.example.bdandsubd.entities.getter.RoomGet
 import com.example.bdandsubd.presenter.addPresentor.AddRoomFragment
+import com.example.bdandsubd.presenter.viewmodels.SharedRoomViewModel
 import com.example.bdandsubd.recycle.RecycleAdapter
 import com.example.bdandsubd.recycle.listeners.RoomListener
 import kotlinx.coroutines.CoroutineScope
@@ -74,14 +75,15 @@ class RoomListFragment : Fragment() {
     }
 
     private fun viewmodelListener() {
-        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        var data:List<RoomGet>?=null
+        val viewModel = ViewModelProvider(requireActivity()).get(SharedRoomViewModel::class.java)
         viewModel.getCallbackLiveData().observe(viewLifecycleOwner) { value ->
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    val data = DbWorker.newsDao.getDataFromRoom()
-                    withContext(Dispatchers.Main) {
-                        adapter.roomList = data
-                    }
+                    data = DbWorker.newsDao.getDataFromRoom()
+                }
+                withContext(Dispatchers.Main) {
+                    adapter.roomList = data!!
                 }
             }
         }

@@ -7,17 +7,19 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bdandsubd.R
-import com.example.bdandsubd.SharedViewModel
+import com.example.bdandsubd.presenter.viewmodels.SharedViewModel
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.databinding.FragmentHotelListBinding
 import com.example.bdandsubd.entities.getter.HotelGet
-import com.example.bdandsubd.presenter.addPresentor.AddGuestFragment
 import com.example.bdandsubd.presenter.addPresentor.AddHotelFragment
+import com.example.bdandsubd.presenter.viewmodels.SharedHotelViewModel
 import com.example.bdandsubd.recycle.RecycleAdapter
 import com.example.bdandsubd.recycle.listeners.HotelListener
 import kotlinx.coroutines.CoroutineScope
@@ -38,10 +40,10 @@ class HotelListFragment : Fragment() {
         deleteData()
         binding.addingButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(binding.frameLayoutDialog.id, AddHotelFragment.newInstance())
+                .replace(binding.frameLayoutDialog.id, AddHotelFragment.newInstance(false))
                 .commit()
         }
-        val myviewmodel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val myviewmodel = ViewModelProvider(requireActivity()).get(SharedHotelViewModel::class.java)
 
         myviewmodel.getCallbackLiveData().observe(viewLifecycleOwner) { value ->
             viewLifecycleOwner.lifecycleScope.launch {
@@ -57,6 +59,13 @@ class HotelListFragment : Fragment() {
             withContext(Dispatchers.IO) {
                 val hotelList = DbWorker.newsDao.getDateFromHotel()
                 adapter = RecycleAdapter(hotelList, 5, object : HotelListener {
+                    override fun editHotel(hotel: HotelGet) {
+                        setFragmentResult(FRAGMENT_KEY, bundleOf(BUNDLE_KEY to hotel))
+                        parentFragmentManager.beginTransaction()
+                            .replace(binding.frameLayoutDialog.id, AddHotelFragment.newInstance(true))
+                            .commit()
+                    }
+
                     override suspend fun deleteHotel(hotel: HotelGet) {
                         withContext(Dispatchers.IO) {
                             DbWorker.newsDao.deleteHotel(hotel.id!!)
@@ -112,6 +121,8 @@ class HotelListFragment : Fragment() {
     }
 
     companion object {
+        const val FRAGMENT_KEY="frag_key"
+        const val BUNDLE_KEY="bundlekey"
         @JvmStatic
         fun newInstance() = HotelListFragment()
     }

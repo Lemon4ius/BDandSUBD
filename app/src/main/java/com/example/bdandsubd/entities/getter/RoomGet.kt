@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 data class RoomGet(
@@ -15,4 +16,4 @@ data class RoomGet(
     val type: String,
     val price: Double,
     var isChecked:Boolean?=false
-)
+): Serializable

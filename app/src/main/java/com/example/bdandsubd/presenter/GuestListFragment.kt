@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bdandsubd.recycle.listeners.GuestListener
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.R
-import com.example.bdandsubd.SharedViewModel
+import com.example.bdandsubd.presenter.viewmodels.SharedViewModel
 import com.example.bdandsubd.databinding.FragmentItemsListBinding
 import com.example.bdandsubd.entities.getter.GuestGet
 import com.example.bdandsubd.presenter.addPresentor.AddGuestFragment
@@ -36,9 +38,9 @@ class GuestListFragment : Fragment() {
         nagigatioTopAppBar()
         nabigationBottomAppBar()
 
-        val myviewmodel=ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val myviewmodel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-        myviewmodel.getCallbackLiveData().observe(viewLifecycleOwner){values->
+        myviewmodel.getCallbackLiveData().observe(viewLifecycleOwner) { values ->
 
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
@@ -52,7 +54,7 @@ class GuestListFragment : Fragment() {
 
         binding.addingButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(binding.frameLayoutDialog.id, AddGuestFragment.newInstance())
+                .replace(binding.frameLayoutDialog.id, AddGuestFragment.newInstance(false))
                 .commit()
         }
         return binding.root
@@ -63,6 +65,21 @@ class GuestListFragment : Fragment() {
             withContext(Dispatchers.IO) {
                 val date = DbWorker.newsDao.getDataFromGuest()
                 adapter = RecycleAdapter(date, 3, object : GuestListener {
+                    override fun editGuest(guest: GuestGet) {
+                        setFragmentResult(
+                            AddGuestFragment.FRAGMENT_KEY_2, bundleOf(
+                                BUNDLE_RESULT_KEY to guest
+                            )
+                        )
+                        parentFragmentManager
+                            .beginTransaction()
+                            .replace(
+                                binding.frameLayoutDialog.id,
+                                AddGuestFragment.newInstance(true)
+                            )
+                            .commit()
+                    }
+
                     override suspend fun deleteGuest(guest: GuestGet) {
                         withContext(Dispatchers.IO) {
                             DbWorker.newsDao.deleteGuest(guest.id)
@@ -117,6 +134,7 @@ class GuestListFragment : Fragment() {
 
 
     companion object {
+        const val BUNDLE_RESULT_KEY = "bundlekey"
 
         @JvmStatic
         fun newInstance() = GuestListFragment()

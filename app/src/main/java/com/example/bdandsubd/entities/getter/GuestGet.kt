@@ -1,6 +1,7 @@
 package com.example.bdandsubd.entities.getter
 
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -11,4 +12,4 @@ data class GuestGet (
     val checkInDate: LocalDate,
     val checkOutDate: LocalDate,
     var isChecked:Boolean?=false
-)
+):Serializable
