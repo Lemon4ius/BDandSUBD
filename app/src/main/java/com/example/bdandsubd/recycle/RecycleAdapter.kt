@@ -182,6 +182,7 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             }
 
             5 -> {
+
                 val hotel = hotelList.get(position)
                 holder.itemView.tag = hotel
                 val binding = (holder as HotelHolder)
@@ -244,7 +245,8 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             }
 
             4 -> {
-
+                val room=v?.tag as RoomGet
+                roomListener.editRoom(room)
             }
 
             5 -> {
@@ -281,4 +283,5 @@ class RecycleAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             hotelCheckActive.forEach { hotelListener.deleteHotel(it) }
         }
     }
+
 }

@@ -20,6 +20,5 @@ class GuestHolder(val binding: ListItemGuestBinding) : RecyclerView.ViewHolder(b
             "Дата заселения: " + guest.checkInDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         binding.dateOut.text =
             "Дата выселения: " + guest.checkOutDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-
     }
 }

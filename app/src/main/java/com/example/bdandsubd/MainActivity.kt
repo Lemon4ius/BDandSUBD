@@ -4,20 +4,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.databinding.ActivityMainBinding
-import com.example.bdandsubd.entities.Guest
-import com.example.bdandsubd.entities.Hotel
-import com.example.bdandsubd.entities.Room
+import com.example.bdandsubd.entities.getter.HotelGet
+import com.example.bdandsubd.navigation.GuestlNavigation
+import com.example.bdandsubd.navigation.HotelNavigation
+import com.example.bdandsubd.navigation.RoomlNavigation
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Connection
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 
-class MainActivity : AppCompatActivity(),MainNavigation {
+class MainActivity : AppCompatActivity(),MainNavigation,HotelNavigation,RoomlNavigation,GuestlNavigation {
     val router: Router=App.INSTANCE.router
     lateinit var binding: ActivityMainBinding
     var connection: Connection? = null
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity(),MainNavigation {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        bottomNavigation()
         CoroutineScope(Dispatchers.IO).launch {
             DbWorker.build(applicationContext)
 //            val dateTime = LocalDate.now()
@@ -51,6 +51,30 @@ class MainActivity : AppCompatActivity(),MainNavigation {
         router.newRootScreen(Screen.TabledListFrag())
     }
 
+    private fun bottomNavigation() {
+        binding.bottomNavigationView.setOnItemSelectedListener{item->
+            when(item.itemId){
+                R.id.page1->{
+                    router.newRootScreen(Screen.TabledListFrag())
+                    true
+                }
+                R.id.page2->{
+                    router.navigateTo(Screen.ItemExporFragment())
+                    true
+                }
+                R.id.page3->{
+                    router.newRootScreen(Screen.ItemDiagramBarFragment())
+                    true
+                }
+                R.id.page4->{
+                    router.newRootScreen(Screen.ItemDiagramFragment())
+                    true
+                }
+                else->false
+            }
+        }
+    }
+
     override fun goToHotel() {
         router.navigateTo(Screen.ItemHotelFrag())
     }
@@ -61,5 +85,17 @@ class MainActivity : AppCompatActivity(),MainNavigation {
 
     override fun goToGuest() {
         router.navigateTo(Screen.ItemsListFrag())
+    }
+
+    override fun openSearch() {
+        router.navigateTo(Screen.ItemSearchFragment())
+    }
+
+    override fun openGuestSearch() {
+        router.navigateTo(Screen.ItemSearchGuestFragment())
+    }
+
+    override fun openRoomtSearch() {
+        router.navigateTo(Screen.ItemSearchRoomFragment())
     }
 }

@@ -56,6 +56,13 @@ dependencies {
     //FragmentResultApi
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
+    //Diagrams
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //Word
+    implementation ("org.apache.poi:poi:5.2.4")
+    implementation ("org.apache.poi:poi-ooxml:5.2.4")
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

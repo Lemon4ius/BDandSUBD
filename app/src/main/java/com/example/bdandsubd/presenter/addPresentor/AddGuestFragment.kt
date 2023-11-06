@@ -39,7 +39,6 @@ class AddGuestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddGuest2Binding.inflate(inflater)
-
         val check=arguments?.getBoolean(BUNDLE_KEY_2)
         if (check!!){
             setFragmentResultListener(FRAGMENT_KEY_2){requestKey, bundle ->

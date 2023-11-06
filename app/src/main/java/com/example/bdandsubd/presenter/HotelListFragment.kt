@@ -1,8 +1,12 @@
 package com.example.bdandsubd.presenter
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bdandsubd.MainActivity
 import com.example.bdandsubd.R
 import com.example.bdandsubd.presenter.viewmodels.SharedViewModel
 import com.example.bdandsubd.dataBase.DbWorker
 import com.example.bdandsubd.databinding.FragmentHotelListBinding
 import com.example.bdandsubd.entities.getter.HotelGet
+import com.example.bdandsubd.navigation.HotelNavigation
 import com.example.bdandsubd.presenter.addPresentor.AddHotelFragment
 import com.example.bdandsubd.presenter.viewmodels.SharedHotelViewModel
 import com.example.bdandsubd.recycle.RecycleAdapter
@@ -31,6 +37,11 @@ import kotlinx.coroutines.withContext
 class HotelListFragment : Fragment() {
     lateinit var binding: FragmentHotelListBinding
     lateinit var adapter: RecycleAdapter
+    lateinit var hotelNavigation: HotelNavigation
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        hotelNavigation=context as MainActivity
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,18 +54,16 @@ class HotelListFragment : Fragment() {
                 .replace(binding.frameLayoutDialog.id, AddHotelFragment.newInstance(false))
                 .commit()
         }
-        val myviewmodel = ViewModelProvider(requireActivity()).get(SharedHotelViewModel::class.java)
+        updateAdapter()
+        initAdapter()
+        requireActivity()
 
-        myviewmodel.getCallbackLiveData().observe(viewLifecycleOwner) { value ->
-            viewLifecycleOwner.lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    val data = DbWorker.newsDao.getDateFromHotel()
-                    withContext(Dispatchers.Main) {
-                        adapter.hotelList = data
-                    }
-                }
-            }
-        }
+        return binding.root
+    }
+
+
+
+    private fun initAdapter() {
         viewLifecycleOwner.lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val hotelList = DbWorker.newsDao.getDateFromHotel()
@@ -88,8 +97,21 @@ class HotelListFragment : Fragment() {
                 }
             }
         }
+    }
 
-        return binding.root
+    private fun updateAdapter() {
+        val myviewmodel = ViewModelProvider(requireActivity()).get(SharedHotelViewModel::class.java)
+
+        myviewmodel.getCallbackLiveData().observe(viewLifecycleOwner) { value ->
+            viewLifecycleOwner.lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val data = DbWorker.newsDao.getDateFromHotel()
+                    withContext(Dispatchers.Main) {
+                        adapter.hotelList = data
+                    }
+                }
+            }
+        }
     }
 
     private fun deleteData() {
@@ -111,6 +133,11 @@ class HotelListFragment : Fragment() {
                     R.id.trash -> {
                         binding.toolbar.visibility = View.VISIBLE
                         adapter.checkBoxActive()
+
+                    }
+                    R.id.search_bar->{
+                        hotelNavigation.openSearch()
+
                     }
                     else -> false
                 }
@@ -118,6 +145,12 @@ class HotelListFragment : Fragment() {
                 return true
             }
         })
+    }
+
+
+
+    private fun searchHotel() {
+
     }
 
     companion object {

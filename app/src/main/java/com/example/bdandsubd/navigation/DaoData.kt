@@ -23,6 +23,8 @@ interface DaoData {
     fun deleteHotel(id: Int)
     @Update
     fun updateHotel(hotel: Hotel)
+    @Query("SELECT * FROM Hotel WHERE REPLACE(name, '''', '') LIKE '%'||:title||'%'")
+    fun searchHotel(title:String):List<HotelGet>
 
 
     @Query("SELECT * FROM Guest")
@@ -33,6 +35,8 @@ interface DaoData {
     fun deleteGuest(id: Int)
     @Update
     fun updateGuest(guest: Guest)
+    @Query("SELECT * FROM Guest WHERE REPLACE(name, '''', '') LIKE '%'||:title||'%'")
+    fun searchGuest(title:String):List<GuestGet>
 
 
     @Query("SELECT Room.id,Guest.name as 'nameGuest',Hotel.name as 'nameHotel', Room.roomNumber, Room.type, Room.price  FROM Room JOIN Guest ON Room.guest_id=Guest.id JOIN Hotel ON Room.hotel_id=Hotel.id")
@@ -43,5 +47,11 @@ interface DaoData {
     fun deleteRoom(id: Int)
     @Update
     fun updateRoom(room: Room)
+    @Query("SELECT Room.id,Guest.name as 'nameGuest',Hotel.name as 'nameHotel', Room.roomNumber, Room.type, Room.price FROM Room JOIN Guest ON Room.guest_id=Guest.id JOIN Hotel ON Room.hotel_id=Hotel.id WHERE REPLACE(roomNumber, '''', '') LIKE '%'||:number||'%'")
+    fun searchRoom(number:Int):List<RoomGet>
 
+
+    //Diagrams query
+//    @Query("")
+//    fun getGuestFromHotel()
 }
