@@ -139,6 +139,9 @@ class HotelListFragment : Fragment() {
                         hotelNavigation.openSearch()
 
                     }
+                    R.id.report->{
+                        hotelNavigation.openHotelReport("Hotel")
+                    }
                     else -> false
                 }
 

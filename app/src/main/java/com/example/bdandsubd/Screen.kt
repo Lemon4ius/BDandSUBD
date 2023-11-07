@@ -6,6 +6,7 @@ import com.example.bdandsubd.presenter.PieDiagramsFragment
 import com.example.bdandsubd.presenter.GuestListFragment
 import com.example.bdandsubd.presenter.HotelListFragment
 import com.example.bdandsubd.presenter.ListTablesFragment
+import com.example.bdandsubd.presenter.ReportFragment
 import com.example.bdandsubd.presenter.RoomListFragment
 import com.example.bdandsubd.presenter.SearchFragment
 import com.github.terrakok.cicerone.Screen
@@ -23,4 +24,5 @@ object Screen {
     fun ItemDiagramFragment()= FragmentScreen{PieDiagramsFragment.newInstance()}
     fun ItemDiagramBarFragment()= FragmentScreen{BarChartFragment.newInstance()}
     fun ItemExporFragment()=FragmentScreen{ExportWordFragment.newInstance()}
+    fun ItemReportFragment(type:String)=FragmentScreen{ReportFragment.newInstance(type)}
 }

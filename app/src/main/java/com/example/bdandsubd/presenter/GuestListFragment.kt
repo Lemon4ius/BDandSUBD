@@ -138,6 +138,10 @@ class GuestListFragment : Fragment() {
                     guestlNavigation.openGuestSearch()
                     true
                 }
+                R.id.report->{
+                    guestlNavigation.reportGuest("Guest")
+                    true
+                }
 
                 else -> false
             }

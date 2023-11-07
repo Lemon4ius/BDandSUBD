@@ -11,4 +11,13 @@
         <item name="colorControlNormal">#B7FFD700</item>
         <item name="colorControlActivated">#ffd700</item>
     </style>
+
+    <style name="TableCellStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">8dp</item> <!-- Опционально: задайте отступы -->
+        <item name="android:background">@drawable/cell_background</item> <!-- Опционально: задайте фон -->
+        <item name="android:gravity">center</item> <!-- Опционально: задайте выравнивание содержимого -->
+    </style>
+
 </resources>

@@ -81,6 +81,9 @@ class RoomListFragment : Fragment() {
                     R.id.search_bar->{
                         roomlNavigation.openRoomtSearch()
                     }
+                    R.id.report->{
+                        roomlNavigation.reportRoom("Room")
+                    }
 
                 }
                 return true
