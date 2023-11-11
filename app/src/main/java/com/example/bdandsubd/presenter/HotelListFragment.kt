@@ -15,6 +15,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bdandsubd.MainActivity
@@ -136,13 +137,18 @@ class HotelListFragment : Fragment() {
 
                     }
                     R.id.search_bar->{
+//                        findNavController().navigate(
+//                            R.id.action_hotelListFragment_to_searchFragment,
+//                            bundleOf(SearchFragment.BUNDLE_INSTANCE_SEARCH_HOTEL_KEY to 1)
+//                            )
                         hotelNavigation.openSearch()
 
                     }
                     R.id.report->{
+
                         hotelNavigation.openHotelReport("Hotel")
                     }
-                    else -> false
+
                 }
 
                 return true

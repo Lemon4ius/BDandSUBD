@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/listTablesFragment">
+    <fragment
+        android:id="@+id/listTablesFragment"
+        android:name="com.example.bdandsubd.presenter.ListTablesFragment"
+        android:label="fragment_list_tables"
+        tools:layout="@layout/fragment_list_tables" >
+        <action
+            android:id="@+id/action_listTablesFragment_to_hotelListFragment"
+            app:destination="@id/hotelListFragment" />
+        <action
+            android:id="@+id/action_listTablesFragment_to_roomListFragment"
+            app:destination="@id/roomListFragment" />
+        <action
+            android:id="@+id/action_listTablesFragment_to_guestListFragment"
+            app:destination="@id/guestListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hotelListFragment"
+        android:name="com.example.bdandsubd.presenter.HotelListFragment"
+        android:label="fragment_hotel_list"
+        tools:layout="@layout/fragment_hotel_list" >
+        <action
+            android:id="@+id/action_hotelListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomListFragment"
+        android:name="com.example.bdandsubd.presenter.RoomListFragment"
+        android:label="fragment_room_list"
+        tools:layout="@layout/fragment_room_list" >
+        <action
+            android:id="@+id/action_roomListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guestListFragment"
+        android:name="com.example.bdandsubd.presenter.GuestListFragment"
+        android:label="fragment_items_list"
+        tools:layout="@layout/fragment_items_list" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.bdandsubd.presenter.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+</navigation>
